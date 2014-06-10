@@ -5,6 +5,7 @@
 
 #include "ppport.h"
 
+#include <string.h>
 
 static SV*
 mkkey_domain(pTHX_ SV *domain) {
