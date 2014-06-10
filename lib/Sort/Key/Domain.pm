@@ -1,38 +1,36 @@
 package Sort::Key::Domain;
 
-use 5.018002;
 use strict;
 use warnings;
+
+BEGIN {
+    our $VERSION = 0.01;
+    require XSLoader;
+    XSLoader::load('Sort::Key::Domain', $VERSION);
+}
 
 require Exporter;
 
 our @ISA = qw(Exporter);
+our @EXPORT_OK = qw( domainkeysort
+                     domainkeysort_inplace
+                     rdomainkeysort
+                     rdomainkeysort_inplace
+                     domainsort
+                     domainsort_inplace
+                     rdomainsort
+                     rdomainsort_inplace
+                     mkkey_domain );
 
-# Items to export into callers namespace by default. Note: do not export
-# names by default without a very good reason. Use EXPORT_OK instead.
-# Do not simply export all your public functions/methods/constants.
+use Sort::Key::Register domain => \&mkkey_domain, 'str';
 
-# This allows declaration	use Sort::Key::Domain ':all';
-# If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
-# will save memory.
-our %EXPORT_TAGS = ( 'all' => [ qw(
-	
-) ] );
-
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
-our @EXPORT = qw(
-	
-);
-
-our $VERSION = '0.01';
-
-require XSLoader;
-XSLoader::load('Sort::Key::Domain', $VERSION);
-
-# Preloaded methods go here.
+use Sort::Key::Maker domainkeysort => 'domain';
+use Sort::Key::Maker rdomainkeysort => '-domain';
+use Sort::Key::Maker domainsort => \&mkkey_domain, 'str';
+use Sort::Key::Maker rdomainsort => \&mkkey_domain, '-str';
 
 1;
+
 __END__
 # Below is stub documentation for your module. You'd better edit it!
 
