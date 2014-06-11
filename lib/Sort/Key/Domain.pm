@@ -32,28 +32,52 @@ use Sort::Key::Maker rdomainsort => \&mkkey_domain, '-str';
 1;
 
 __END__
-# Below is stub documentation for your module. You'd better edit it!
 
 =head1 NAME
 
-Sort::Key::Domain - Perl extension for blah blah blah
+Sort::Key::Domain - Sort domain names
 
 =head1 SYNOPSIS
 
-  use Sort::Key::Domain;
-  blah blah blah
+  use Sort::Key::Domain qw(domainkeysort);
+
+  my @sorted = domainkeysort { $_->domain_name } @url;
 
 =head1 DESCRIPTION
 
-Stub documentation for Sort::Key::Domain, created by h2xs. It looks like the
-author of the extension was negligent enough to leave the stub
-unedited.
+This module extends the L<Sort::Key> family of modules to support
+sorting of domain names.
 
-Blah blah blah.
+=head2 FUNCTIONS
 
-=head2 EXPORT
+The functions that can be imported from this module are as follow:
 
-None by default.
+=over 4
+
+=item domainsort @data
+
+Return the domain names in C<@data> sorted.
+
+=item rdomainsort @data
+
+Returns the domain names in C<@data> sorted in descending order.
+
+=item domainkeysort { CALC_KEY($_) } @data
+
+Returns the elements on C<@array> sorted by the domain name
+resulting from applying them C<CALC_KEY>.
+
+=item rdomainkeysort { CALC_KEY($_) } @data
+
+Returns the elements on C<@array> sorted by the domain name
+resulting from applying them C<CALC_KEY> but in descending order.
+
+=item mkkey_domain $domain
+
+Transforms the given domain name in a key that can be sorted
+lexicographically.
+
+=back
 
 
 
