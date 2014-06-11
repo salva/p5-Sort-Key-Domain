@@ -20,7 +20,6 @@ getopts('n:p:m:rd');
 $opt_m //= 2048;
 $opt_n //= 100_000;
 $opt_p //= 2;
-$opt_r;
 
 sub generate_weights {
     my $opt_n = shift;
@@ -99,6 +98,7 @@ sub dump_array {
     close $fh or die $!;
 }
 
+# IPC::Open3 has a big overhead
 sub open2 {
     pipe my ($cr, $pw) or die $!;
     pipe my ($pr, $cw) or die $!;
@@ -162,7 +162,7 @@ for my $cpus (1, 2, 4, 8, 16, 32, 64) {
         }
         close $r or die $!;
         waitpid $pid, 0;
-        $opt_d and dump_array(ext => \@sorted);
+        $opt_d and dump_array("ext_$cpus" => \@sorted);
     };
 
     $subs{"ext_skd_$cpus"} = sub {
@@ -182,7 +182,7 @@ for my $cpus (1, 2, 4, 8, 16, 32, 64) {
         }
         close $r or die $!;
         waitpid $pid, 0;
-        $opt_d and dump_array(ext => \@sorted);
+        $opt_d and dump_array("ext_skd_$cpus" => \@sorted);
     };
 
     $subs{"as_$cpus"} = sub {
@@ -205,7 +205,7 @@ for my $cpus (1, 2, 4, 8, 16, 32, 64) {
         }
         close $r or die $!;
         waitpid $pid, 0;
-        $opt_d and dump_array(as => \@sorted);
+        $opt_d and dump_array("as_$cpus" => \@sorted);
     };
 }
 
@@ -245,5 +245,24 @@ Use Scott Deindorfer code to generate random data.
 Dump sorted data for testing.
 
 =back
+
+=head1 EXAMPLES
+
+  $ domains_bm.pl -n 300000 -p 2
+  retrieving top level domains...
+  generating data...
+  benchmarking...
+            s/iter  as_2  as_1  grt ext_2 ext_1   js   sk ext_skd_2 ext_skd_1  skd
+  as_2        9.40    --   -1% -31%  -38%  -39% -39% -50%      -65%      -65% -68%
+  as_1        9.35    1%    -- -31%  -38%  -38% -39% -50%      -64%      -65% -68%
+  grt         6.47   45%   44%   --  -10%  -11% -12% -28%      -49%      -49% -53%
+  ext_2       5.81   62%   61%  11%    --   -1%  -2% -19%      -43%      -43% -48%
+  ext_1       5.76   63%   62%  12%    1%    --  -1% -19%      -42%      -43% -47%
+  js          5.69   65%   64%  14%    2%    1%   -- -18%      -42%      -42% -47%
+  sk          4.68  101%  100%  38%   24%   23%  22%   --      -29%      -30% -35%
+  ext_skd_2   3.33  182%  181%  94%   74%   73%  71%  41%        --       -1%  -9%
+  ext_skd_1   3.29  186%  184%  97%   76%   75%  73%  42%        1%        --  -8%
+  skd         3.03  211%  209% 114%   92%   90%  88%  55%       10%        9%   --
+
 
 =cut

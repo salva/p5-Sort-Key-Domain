@@ -6,3 +6,4 @@ ppport.h
 README
 t/Sort-Key-Domain.t
 lib/Sort/Key/Domain.pm
+examples/domains_bm.pl
