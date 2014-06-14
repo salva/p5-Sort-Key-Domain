@@ -1,5 +1,8 @@
 Revision history for Perl extension Sort::Key::Domain.
 
+0.02
+        - require perl 5.8.x
+
 0.01  Tue Jun 10 18:35:41 2014
 	- original version; created by h2xs 1.23 with options
 		-An Sort::Key::Domain

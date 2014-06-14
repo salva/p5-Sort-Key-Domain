@@ -1,5 +1,7 @@
 use ExtUtils::MakeMaker;
 
+use 5.008;
+
 WriteMakefile( NAME           => 'Sort::Key::Domain',
                VERSION_FROM   => 'lib/Sort/Key/Domain.pm',
                PREREQ_PM      => { 'Sort::Key' => '0' },
