@@ -33,6 +33,8 @@ use Sort::Key::Maker rdomainsort => \&mkkey_domain, '-str';
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Sort::Key::Domain - Sort domain names
