@@ -7,4 +7,9 @@ WriteMakefile( NAME           => 'Sort::Key::Domain',
                PREREQ_PM      => { 'Sort::Key' => '0' },
                ABSTRACT_FROM  => 'lib/Sort/Key/Domain.pm',
                AUTHOR         => 'Salvador Fandiño <sfandino@yahoo.com>',
-               INC            => '-I.' );
+               INC            => '-I.',
+               META_MERGE => {
+                   resources => {
+                       repository => 'https://github.com/salva/p5-Sort-Key-Domain',
+                   },
+               });
